@@ -25,9 +25,20 @@ max_hints=10
 echo "Welcome to the Guessing Game!"
 echo "Try to guess the object. You will get a hint after each incorrect guess."
 
-for i in {0..10}
-do
-	echo "${hints[$i]}"
+# Loop until the correct answer is guessed or hints are exhausted
+while [ "$hint_count" -lt "$max_hints" ]; do
+  echo "Please make a guess:"
+  read guess
+
+  # Check if the guess is correct
+  if [[ "$guess" == "$correct_answer" ]]; then
+    echo "Congratulations! You guessed it right! The answer is $correct_answer."
+    exit 0
+  else
+    # Provide a hint if the guess is incorrect
+    echo "Wrong guess. ${hints[$hint_count]}"
+    hint_count=$((hint_count + 1))
+  fi
 done
 
 echo "You have used all $max_hints hints. The correct answer was $correct_answer."
